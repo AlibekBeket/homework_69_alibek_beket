@@ -47,3 +47,22 @@ def json_subtract_number(request, *args, **kwargs):
             response = JsonResponse(response_data)
             response.status_code = 400
     return response
+
+
+def json_multiply_number(request, *args, **kwargs):
+    response_data = {'detail': 'Нет входных данных'}
+    response = JsonResponse(response_data)
+    response.status_code = 200
+    if request.body:
+        number = json.loads(request.body)
+        try:
+            a = int(number.get('A'))
+            b = int(number.get('B'))
+            answer = {'answer': a * b}
+            response = JsonResponse(answer)
+            response.status_code = 201
+        except Exception:
+            response_data = {'error': 'Некорректный набор данных'}
+            response = JsonResponse(response_data)
+            response.status_code = 400
+    return response
