@@ -66,3 +66,27 @@ def json_multiply_number(request, *args, **kwargs):
             response = JsonResponse(response_data)
             response.status_code = 400
     return response
+
+
+def json_divide_number(request, *args, **kwargs):
+    response_data = {'detail': 'Нет входных данных'}
+    response = JsonResponse(response_data)
+    response.status_code = 200
+    if request.body:
+        number = json.loads(request.body)
+        try:
+            a = int(number.get('A'))
+            b = int(number.get('B'))
+            if b == 0:
+                response_data = {'error': 'На 0 делить нельзя'}
+                response = JsonResponse(response_data)
+                response.status_code = 400
+            else:
+                answer = {'answer': a / b}
+                response = JsonResponse(answer)
+                response.status_code = 201
+        except Exception:
+            response_data = {'error': 'Некорректный набор данных'}
+            response = JsonResponse(response_data)
+            response.status_code = 400
+    return response
