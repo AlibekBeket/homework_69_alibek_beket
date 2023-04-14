@@ -21,25 +21,28 @@
         integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
         crossorigin="anonymous"></script>
 <script>
+    url = 'http://127.0.0.1:8000/'
+    let operation = 'add/';
     if(document.getElementById('add').clicked == true){
-       let url = 'http://127.0.0.1:8000/add/';
+       let operation = 'add/';
     }
     else if(document.getElementById('subtract').clicked == true){
-        let url = 'http://127.0.0.1:8000/subtract/';
+        let operation = 'subtract/';
     }
     else if(document.getElementById('multiply').clicked == true){
-        let url = 'http://127.0.0.1:8000/multiply/';
+        let operation = 'multiply/';
     }
     else if(document.getElementById('divide').clicked == true){
-        let url = 'http://127.0.0.1:8000/divide/';
-    };
+        let operation = 'divide/';
+    }
     let data = {'A': $('#A').val(), 'B': $('#B').val()};
     $.ajax({
-        url: 'http://127.0.0.1:8000/add/',
-        method: 'get',
+        url: url + operation,
+        method: 'POST',
         dataType: 'json',
         data: data,
-        success: function(data){
+    }).done(
+        function (data){
             const answer = document.getElementById('answer');
             const answerText = document.createElement('span');
             if (data.get('answer')){
@@ -51,7 +54,7 @@
             answerText.innerText = data;
             answer.append(answerText);
         }
-    });
+    );
 </script>
 </body>
 </html>
