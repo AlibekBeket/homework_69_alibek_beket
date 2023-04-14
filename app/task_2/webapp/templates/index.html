@@ -5,7 +5,53 @@
     <title>Index</title>
 </head>
 <body>
-<input type="text" name="A" placeholder="Введите первое число">
-<input type="text" name="B" placeholder="Введите второе число">
+<div id="input">
+    <input id="A" name="A" type="text" placeholder="Введите первое число">
+    <input id="B" name="B" type="text" placeholder="Введите второе число">
+</div>
+<div id="button">
+    <button type="submit" id="add" value="add">Add</button>
+    <button type="submit" id="subtract" value="subtract">Subtract</button>
+    <button type="submit" id="multiply" value="multiply">Multiply</button>
+    <button type="submit" id="divide" value="divide">Divide</button>
+</div>
+<div id="answer"></div>
+<script
+        src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+<script>
+    if(document.getElementById('add').clicked == true){
+       let url = 'http://127.0.0.1:8000/add/';
+    }
+    else if(document.getElementById('subtract').clicked == true){
+        let url = 'http://127.0.0.1:8000/subtract/';
+    }
+    else if(document.getElementById('multiply').clicked == true){
+        let url = 'http://127.0.0.1:8000/multiply/';
+    }
+    else if(document.getElementById('divide').clicked == true){
+        let url = 'http://127.0.0.1:8000/divide/';
+    };
+    let data = {'A': $('#A').val(), 'B': $('#B').val()};
+    $.ajax({
+        url: 'http://127.0.0.1:8000/add/',
+        method: 'get',
+        dataType: 'json',
+        data: data,
+        success: function(data){
+            const answer = document.getElementById('answer');
+            const answerText = document.createElement('span');
+            if (data.get('answer')){
+                answer.style.color = 'green';
+            }
+            else {
+                answer.style.color = 'red';
+            };
+            answerText.innerText = data;
+            answer.append(answerText);
+        }
+    });
+</script>
 </body>
 </html>
